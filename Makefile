@@ -1,4 +1,4 @@
-BIN := simplejsonlogger
+BIN := beelogger-service
 
 # Where to push the docker image.
 REGISTRY ?= mschlech

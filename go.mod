@@ -1,4 +1,4 @@
-module github.com/mschlech/SimpleJsonLogger
+module github.com/mschlech/beelogger-service
 
 go 1.12
 
