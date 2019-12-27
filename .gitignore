@@ -10,7 +10,7 @@
 *.lock
 *.bson
 diagnostics*
-./journal/
+journal/
 *.turtle
 # Test binary, built with `go test -c`
 *.test
