@@ -5,7 +5,13 @@
 *.so
 *.dylib
 *.swp
-
+*.wt
+*.data
+*.lock
+*.bson
+diagnostics*
+./journal/
+*.turtle
 # Test binary, built with `go test -c`
 *.test
 

@@ -16,6 +16,12 @@ type Routes []Route
 
 var routes = Routes{
 	Route{
+		"AllHiveMetrics",
+		"GET",
+		"/hives/",
+		handler.GetAllHiveMetrics,
+	},
+	Route{
 		"Weight",
 		"GET",
 		"/Weight/{hiveId}",
