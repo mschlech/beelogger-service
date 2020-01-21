@@ -18,7 +18,8 @@ func init() {
 	hiveDao.Server = "127.0.0.1:27017"
 	hiveDao.Database = "hive"
 	log.Print("Init executed")
-	hiveDao.Connect()
+
+
 }
 
 func GetWeight(w http.ResponseWriter, r *http.Request) {
