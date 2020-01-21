@@ -1,13 +1,28 @@
+# Copyright 2016 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# The binary to build (just the basename).
 BIN := beelogger-service
 
 # Where to push the docker image.
 REGISTRY ?= mschlech
 
 # This version-strategy uses git tags to set the version string
-VERSION := $(shell git describe --tags --always --dirty)
+VERSION ?= $(shell git describe --tags --always --dirty)
 #
 # This version-strategy uses a manual value to set the version string
-#VERSION := 1.2.3
+#VERSION ?= 1.2.3
 
 ###
 ### These variables should not need tweaking.
@@ -26,7 +41,7 @@ BASEIMAGE ?= gcr.io/distroless/static
 IMAGE := $(REGISTRY)/$(BIN)
 TAG := $(VERSION)__$(OS)_$(ARCH)
 
-BUILD_IMAGE ?= golang:1.12-alpine
+BUILD_IMAGE ?= golang:1.13-alpine
 
 # If you want to build all binaries, see the 'all-build' rule.
 # If you want to build all containers, see the 'all-container' rule.
@@ -122,7 +137,7 @@ shell: $(BUILD_DIRS)
 DOTFILE_IMAGE = $(subst /,_,$(IMAGE))-$(TAG)
 
 container: .container-$(DOTFILE_IMAGE) say_container_name
-.container-$(DOTFILE_IMAGE): bin/$(OS)_$(ARCH)/$(BIN) Dockerfile..org
+.container-$(DOTFILE_IMAGE): bin/$(OS)_$(ARCH)/$(BIN) Dockerfile.in
 	@sed                                 \
 	    -e 's|{ARG_BIN}|$(BIN)|g'        \
 	    -e 's|{ARG_ARCH}|$(ARCH)|g'      \
@@ -135,8 +150,7 @@ container: .container-$(DOTFILE_IMAGE) say_container_name
 say_container_name:
 	@echo "container: $(IMAGE):$(TAG)"
 
-push: .push-$(DOTFILE_IMAGE) say_push_name
-.push-$(DOTFILE_IMAGE): .container-$(DOTFILE_IMAGE)
+push: .container-$(DOTFILE_IMAGE) say_push_name
 	@docker push $(IMAGE):$(TAG)
 
 say_push_name:
@@ -181,7 +195,7 @@ $(BUILD_DIRS):
 clean: container-clean bin-clean
 
 container-clean:
-	rm -rf .container-* .dockerfile-* .push-*
+	rm -rf .container-* .dockerfile-*
 
 bin-clean:
 	rm -rf .go bin
