@@ -33,7 +33,7 @@ Build:
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
     - docker images
     - echo "login to docker hub"
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
