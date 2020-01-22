@@ -34,7 +34,7 @@ Build:
     - docker images
     - echo "login to docker hub"
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push
+    - docker push $IMAGETAG
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
     - echo "CI USER:" + $CI_REGISTRY_USER
