@@ -1,7 +1,7 @@
 image: alpine:3.7
 
 services:
-  #- docker:19.03.5-dind
+  - docker:19.03.5-dind
   #- alpine:3.7
 
 stages:
@@ -18,7 +18,7 @@ variables:
 
 before_script:
    #- apt-get install --yes make
-    - apk add  docker make
+    - apk add  docker make go git
     - make build
     - make all-container
 
