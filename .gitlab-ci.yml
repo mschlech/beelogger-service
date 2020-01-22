@@ -24,7 +24,8 @@ Build:
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
-    - docker build -f Dockerfile -t beelogger-admin .
+    - 'make all-build'
+    - 'make all-container'
     - echo "login to docker hub"
     - docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
