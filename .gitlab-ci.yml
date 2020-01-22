@@ -26,6 +26,7 @@ Build:
   stage: build
   script:
     - docker ps
+    - make all-push
     #- ./build/makedrop.sh
     - 'ls -al * '
     - 'pwd'
@@ -36,7 +37,6 @@ Build:
     - echo "CI USER:" + $CI_REGISTRY_USER
     - echo "CI PASSWD:" + $CI_REGISTRY_PASSWORD
     - echo "CI REGISTRY:" + $CI_REGISTRY
-    - docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     #docker tag local-image:tagname new-repo:tagname
     #docker push new-repo:tagname
 
