@@ -26,13 +26,14 @@ Build:
   stage: build
   script:
     - docker ps
-    - make all-push
+    #- make all-push
     #- ./build/makedrop.sh
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
+    - docker images
     - echo "login to docker hub"
-    #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
+    - docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
     - echo "CI USER:" + $CI_REGISTRY_USER
     - echo "CI PASSWD:" + $CI_REGISTRY_PASSWORD
