@@ -16,7 +16,7 @@ variables:
   IMGAGETAG=: mschlech/beelogger-service:$CI_COMMIT_TAG
 
 before_script:
-    - make all-build
+    - make build
     - make all-container
 
 Build:

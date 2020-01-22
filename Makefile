@@ -16,7 +16,7 @@
 BIN := beelogger-service
 
 # Where to push the docker image.
-REGISTRY ?= mschlech
+REGISTRY ?= mschlech/beelogger-service
 
 # This version-strategy uses git tags to set the version string
 VERSION ?= $(shell git describe --tags --always --dirty)
