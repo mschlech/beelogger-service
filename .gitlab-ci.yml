@@ -1,4 +1,4 @@
-image: docker:18
+image: golang:1.9
 
 services:
   - docker:19.03.0-dind
@@ -16,6 +16,8 @@ variables:
   IMGAGETAG=: mschlech/beelogger-service:$CI_COMMIT_TAG
 
 before_script:
+    - make all-build
+    - make all-container
 
 Build:
   stage: build
@@ -24,8 +26,7 @@ Build:
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
-    - 'make all-build'
-    - 'make all-container'
+
     - echo "login to docker hub"
     - docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
