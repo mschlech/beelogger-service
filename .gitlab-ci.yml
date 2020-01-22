@@ -1,7 +1,7 @@
-image: gitlab/dind
+image: alpine:3.7
 
 services:
-  - docker:19.03.0-dind
+  - docker:19.03.5-dind
 
 stages:
   - build
