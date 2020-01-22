@@ -1,5 +1,6 @@
 set -o errexit
 set -o nounset
+set -x
 
 if [ -z "${OS:-}" ]; then
     echo "OS must be set"
