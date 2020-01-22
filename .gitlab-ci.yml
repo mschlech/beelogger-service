@@ -16,13 +16,14 @@ variables:
   IMGAGETAG=: mschlech/beelogger-service:$CI_COMMIT_TAG
 
 before_script:
-    - make build
-    - make all-container
+    #- make build
+    #- make all-container
 
 Build:
   stage: build
   script:
     - docker ps
+    - ./build/makedrop.sh
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
