@@ -2,6 +2,7 @@ image: alpine:3.7
 
 services:
   - docker:19.03.5-dind
+  - docker:latest
 
 stages:
   - build
