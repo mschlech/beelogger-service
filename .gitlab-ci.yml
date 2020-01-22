@@ -14,7 +14,7 @@ variables:
   no_proxy: ""
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2375
-  IMGAGETAG=: mschlech/beelogger-service:$CI_COMMIT_TAG
+  IMGAGETAG: mschlech/beelogger-service:$CI_COMMIT_TAG
 
 before_script:
    #- apt-get install --yes make
@@ -34,6 +34,7 @@ Build:
     - docker images
     - echo "login to docker hub"
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "pushing " + $IMAGETAG
     - docker push $IMAGETAG
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
