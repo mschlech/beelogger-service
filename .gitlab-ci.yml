@@ -15,16 +15,23 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   IMGAGETAG=: mschlech/beelogger-service:$CI_COMMIT_TAG
 
+before_script:
+
 Build:
   stage: build
   script:
     - docker ps
+    - 'ls -al * '
+    - 'pwd'
+    - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
+    - docker build -f Dockerfile -t beelogger-admin .
     - echo "login to docker hub"
+    - docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     - 'pwd'
     - echo "CI USER:" + $CI_REGISTRY_USER
     - echo "CI PASSWD:" + $CI_REGISTRY_PASSWORD
     - echo "CI REGISTRY:" + $CI_REGISTRY
-    #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
+    - docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
     #docker tag local-image:tagname new-repo:tagname
     #docker push new-repo:tagname
 
