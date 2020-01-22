@@ -18,7 +18,7 @@ variables:
 
 before_script:
    #- apt-get install --yes make
-    - apt-get install --yes docker
+    - apk add docker
     #- make build
     #- make all-container
 
