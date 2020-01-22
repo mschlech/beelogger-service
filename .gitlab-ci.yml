@@ -1,9 +1,8 @@
-image: gitlab/dind
+image: alpine:3.7
 
 services:
-  #- docker:19.03.5-dind
-  - docker:latest
-  - alpine:3.7
+  - docker:19.03.5-dind
+  #- alpine:3.7
 
 stages:
   - build
@@ -18,7 +17,8 @@ variables:
   IMGAGETAG=: mschlech/beelogger-service:$CI_COMMIT_TAG
 
 before_script:
-   - apt-get install --yes make
+   #- apt-get install --yes make
+    - apt-get install --yes docker
     #- make build
     #- make all-container
 
