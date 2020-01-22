@@ -26,7 +26,7 @@ Build:
   stage: build
   script:
     - docker ps
-    - ./build/makedrop.sh
+    #- ./build/makedrop.sh
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
