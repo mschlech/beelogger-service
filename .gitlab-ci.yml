@@ -6,6 +6,8 @@ services:
 
 stages:
   - build
+  - test
+  - clouddeploy
 
 variables:
    DOCKER_DRIVER: "overlay2"
