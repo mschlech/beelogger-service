@@ -7,19 +7,20 @@ services:
 stages:
   - build
   - test
-  - clouddeploy
+  - clouddeploy_aws
+  - clouddeploy_gck
+  - clouddeploy_azure
 
 variables:
    DOCKER_DRIVER: "overlay2"
    DOCKER_HOST: tcp://docker:2375
-before_script:
-    - apk add  docker make go git
-    - make build
-    - make all-container
 
 Build:
   stage: build
   script:
+    - apk add  docker make go git
+    - make build
+    - make all-container
     - docker ps
     - docker images
     #linux/amd64 linux/arm linux/arm64 linux/ppc64le linux/s390x
@@ -54,12 +55,39 @@ beelogger-admin:
   script:
     -  echo "invoke gitlab pipeline for beelogger-admin"
 
+beelogger-iot:
+  stage: build
+  script:
+    -  echo "invoke gitlab pipeline for beelogger-admin"
+
 test:
   stage: test
   script:
     - echo "testing"
 
-deploy:
-  stage: clouddeploy
+quality_check_beelogger_service:
+  stage: quality
+    - echo "quality check beelogger-service"
+
+quality_check_beelogger_admin:
+  stage: quality
+    - echo "quality check beelogger-admin"
+
+quality_check_beelogger_iot:
+  stage: quality
+    - echo "quality check beelogger-iot"
+
+deployAWS:
+  stage: clouddeploy_aws
   script:
-    - echo "deploy all containers to kubernetes clusters / services "
+    - echo "deploy all containers to kubernetes clusters / services aws"
+
+deployGCK:
+  stage: clouddeploy_gck
+  script:
+    - echo "deploy all containers to kubernetes clusters / services gck"
+
+deployAzure:
+  stage: clouddeploy_azure
+  script:
+    - echo "deploy all containers to kubernetes clusters / services azure"
