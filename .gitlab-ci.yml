@@ -8,13 +8,8 @@ stages:
   - build
 
 variables:
-   http_proxy: ""
-   https_proxy: ""
-   no_proxy: ""
    DOCKER_DRIVER: "overlay2"
    DOCKER_HOST: tcp://docker:2375
-   IMGAGETAG: "mschlech/beelogger-service:$CI_COMMIT_TAG"
-
 before_script:
     - apk add  docker make go git
     - make build
@@ -27,24 +22,42 @@ Build:
     - docker images
     #linux/amd64 linux/arm linux/arm64 linux/ppc64le linux/s390x
     - IMAGE="beelogger-service"
-    - IMAGE_AMD64_TAG="beelogger-service_"+$CI_BUILD_ID+":"+`docker images | awk  'NR==2 {print $2}' `
-    # +"_"+$CI_BUILD_ID
+    - IMAGE_AMD64_TAG=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==2 {print $2}' `
+    - IMAGE_ARM=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==3 {print $2}' `
+    - IMAGE_ARM64=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==4 {print $2}' `
+    - IMAGE_PPC64LE=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==5 {print $2}' `
+    - IMAGE_S390X=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==6 {print $2}' `
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + \
             " ci build token " + $CI_BUILD_TOKEN + \
             " ci build ID " + $CI_BUILD_ID'
     - echo "image amd64 -> " + $IMAGE_AMD64
-    - echo "IMAGE_AMD64_TAG -> " + $IMAGE_AMD64_TAG
+    - echo "image arm -> " + $IMAGE_ARM
+    - echo "image ARM64 -> " + $IMAGE_ARM64
+    - echo "image PPC64LE -> " + $IMAGE_PPC64LE
+    - echo "IMAGE_S390X -> " + $IMAGE_S390X
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    #-  docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "pushing "
     - docker push mschlech/$IMAGE $IMAGE_AMD64
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
-    - 'pwd'
-    - echo "CI USER:" + $CI_REGISTRY_USER
-    - echo "CI PASSWD:" + $CI_REGISTRY_PASSWORD
-    - echo "CI REGISTRY:" + $CI_REGISTRY
-    #docker tag local-image:tagname new-repo:tagname
-    #docker push new-repo:tagname
+IAC:
+  stage: build
+  script:
+    - echo "creating mongodb container"
+    - echo "creating kafka"
 
+BEELOGGER_ADMIN:
+  stage: build
+  script:
+    -  echo "invoke gitlab pipeline for beelogger-admin"
+
+Test:
+  stage: test
+  script:
+    - echo "testing"
+
+Deploy:
+  stage: cloud deploy
+  script:
+    - echo "deploy all containers to kubernetes clusters / services "
