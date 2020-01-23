@@ -27,18 +27,17 @@ Build:
     - docker images
     #linux/amd64 linux/arm linux/arm64 linux/ppc64le linux/s390x
     - IMAGE="beelogger-service"
-    - IMAGE_AMD64_TAG="beelogger-service:"+`docker images | awk  'NR==1 {print $2}' `
+    - IMAGE_AMD64_TAG="beelogger-service_"+$CI_BUILD_ID+":"+`docker images | awk  'NR==2 {print $2}' `
     # +"_"+$CI_BUILD_ID
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + \
             " ci build token " + $CI_BUILD_TOKEN + \
             " ci build ID " + $CI_BUILD_ID'
-    - echo "Commit Tag -> " + $CI_COMMIT_TAG
     - echo "image amd64 -> " + $IMAGE_AMD64
     - echo "IMAGE_AMD64_TAG -> " + $IMAGE_AMD64_TAG
-    #- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - - docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    #-  docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
     - echo "pushing "
     - docker push mschlech/$IMAGE $IMAGE_AMD64
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
