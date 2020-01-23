@@ -17,22 +17,20 @@ variables:
   IMGAGETAG: mschlech/beelogger-service:$CI_COMMIT_TAG
 
 before_script:
-   #- apt-get install --yes make
     - apk add  docker make go git
-    - make build
-    - make all-container
+   # - make build
+   # - make all-container
 
 Build:
   stage: build
   script:
     - docker ps
-    #- make all-push
-    #- ./build/makedrop.sh
     - 'ls -al * '
     - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + " ci build token " + $CI_BUILD_TOKEN'
     - docker images
-    - echo "login to docker hub"
+    - echo "Commit Tag -> " + $CI_COMMIT_TAG
+    - echo "login to docker hub -> " + $IMAGETAG
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "pushing " + $IMAGETAG
     - docker push $IMAGETAG
