@@ -31,8 +31,6 @@ Build:
     - IMAGE_ARM64=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==4 {print $2}' `
     - IMAGE_PPC64LE=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==5 {print $2}' `
     - IMAGE_S390X=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==6 {print $2}' `
-    - 'ls -al * '
-    - 'pwd'
     - 'echo "registry image : " + $CI_REGISTRY_IMAGE + \
             " ci build token " + $CI_BUILD_TOKEN + \
             " ci build ID " + $CI_BUILD_ID'
