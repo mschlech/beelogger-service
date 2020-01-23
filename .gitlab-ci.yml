@@ -60,6 +60,6 @@ test:
     - echo "testing"
 
 deploy:
-  stage: cloud deploy
+  stage: clouddeploy
   script:
     - echo "deploy all containers to kubernetes clusters / services "
