@@ -68,14 +68,17 @@ test:
 
 quality_check_beelogger_service:
   stage: quality
+  script:
     - echo "quality check beelogger-service"
 
 quality_check_beelogger_admin:
   stage: quality
+  script:
     - echo "quality check beelogger-admin"
 
 quality_check_beelogger_iot:
   stage: quality
+  script:
     - echo "quality check beelogger-iot"
 
 deployAWS:
