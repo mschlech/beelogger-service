@@ -41,23 +41,23 @@ Build:
     - echo "pushing "
     - docker push mschlech/$IMAGE $IMAGE_AMD64
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
-IAC:
+iac:
   stage: build
   script:
     - echo "creating mongodb container"
     - echo "creating kafka"
 
-BEELOGGER_ADMIN:
+beelogger-admin:
   stage: build
   script:
     -  echo "invoke gitlab pipeline for beelogger-admin"
 
-Test:
+test:
   stage: test
   script:
     - echo "testing"
 
-Deploy:
+deploy:
   stage: cloud deploy
   script:
     - echo "deploy all containers to kubernetes clusters / services "
