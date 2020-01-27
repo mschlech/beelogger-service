@@ -26,7 +26,7 @@ Build:
     #linux/amd64 linux/arm linux/arm64 linux/ppc64le linux/s390x
     - IMAGE="beelogger-service"
     - IMAGE_LOCAL_DEV=$IMAGE
-    - IMAGE_AMD64_TAG=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==2 {print $2}' `
+    - IMAGE_AMD64=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==2 {print $2}' `
     - IMAGE_ARM=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==3 {print $2}' `
     - IMAGE_ARM64=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==4 {print $2}' `
     - IMAGE_PPC64LE=$IMAGE"_"$CI_BUILD_ID":"`docker images | awk  'NR==5 {print $2}' `
@@ -43,7 +43,7 @@ Build:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "pushing "
     #- docker push mschlech/$IMAGE_LOCAL_DEV:latest
-    - docker push mschlech/$IMAGE_AMD64_TAG
+    - docker push mschlech/$IMAGE_ARM64
     - echo "pushed done"
     #- docker login -u gitlab-ci-token --password-stdin $CI_BUILD_TOKEN
 iac:
@@ -57,45 +57,45 @@ beelogger-admin:
   script:
     -  echo "invoke gitlab pipeline for beelogger-admin"
 
-beelogger-iot:
-  stage: build
-  script:
-    -  echo "invoke gitlab pipeline for beelogger-admin"
-
-test:
-  stage: test
-  script:
-    - ls -al
-    - pwd
-    - echo "test image"
-    - make test
-
-quality_check_beelogger_service:
-  stage: quality
-  script:
-    - echo "quality check beelogger-service"
-
-quality_check_beelogger_admin:
-  stage: quality
-  script:
-    - echo "quality check beelogger-admin"
-
-quality_check_beelogger_iot:
-  stage: quality
-  script:
-    - echo "quality check beelogger-iot"
-
-deployAWS:
-  stage: clouddeploy_aws
-  script:
-    - echo "deploy all containers to kubernetes clusters / services aws"
-
-deployGCK:
-  stage: clouddeploy_gck
-  script:
-    - echo "deploy all containers to kubernetes clusters / services gck"
-
-deployAzure:
-  stage: clouddeploy_azure
-  script:
-    - echo "deploy all containers to kubernetes clusters / services azure"
+#beelogger-iot:
+#  stage: build
+#  script:
+#    -  echo "invoke gitlab pipeline for beelogger-admin"
+#
+#test:
+#  stage: test
+#  script:
+#    - ls -al
+#    - pwd
+#    - echo "test image"
+#    - make test
+#
+#quality_check_beelogger_service:
+#  stage: quality
+#  script:
+#    - echo "quality check beelogger-service"
+#
+#quality_check_beelogger_admin:
+#  stage: quality
+#  script:
+#    - echo "quality check beelogger-admin"
+#
+#quality_check_beelogger_iot:
+#  stage: quality
+#  script:
+#    - echo "quality check beelogger-iot"
+#
+#deployAWS:
+#  stage: clouddeploy_aws
+#  script:
+#    - echo "deploy all containers to kubernetes clusters / services aws"
+#
+#deployGCK:
+#  stage: clouddeploy_gck
+#  script:
+#    - echo "deploy all containers to kubernetes clusters / services gck"
+#
+#deployAzure:
+#  stage: clouddeploy_azure
+#  script:
+#    - echo "deploy all containers to kubernetes clusters / services azure"
