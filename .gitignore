@@ -25,3 +25,6 @@ bin
 *.push-*
 *.docker*
 *.container*
+
+# ignore container/cloud dependent tools
+istio-1.1.7/
